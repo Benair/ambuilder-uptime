@@ -17,3 +17,14 @@ when it comes back.
 
 The first version used a GitHub Actions schedule; it was removed for the
 reason above.
+
+## Email replies (`replies/`)
+
+A Cloudflare Email Worker for customers' replies to automation emails. Those
+emails carry `Reply-To: reply+<code>@ambuilder.ca`; Email Routing (subaddressing
+on, `reply@ambuilder.ca` → this Worker) delivers the reply here, and the Worker
+posts it to `https://api.ambuilder.ca/email/inbound`. The server stops that
+customer's follow-ups and forwards the reply to the business owner. If the
+server can't be reached, the message is forwarded to the `FALLBACK` address.
+
+Secrets: `INBOUND_SECRET` (same as the server's `.env`), `FALLBACK`.

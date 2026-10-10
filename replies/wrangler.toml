@@ -1,0 +1,7 @@
+# AM Builder replies: Email Worker. See src/index.js.
+name = "ambuilder-replies"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[observability]
+enabled = true
