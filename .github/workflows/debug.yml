@@ -1,0 +1,13 @@
+name: debug
+on: workflow_dispatch
+jobs:
+  d:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for ua in "curl/8" "Mozilla/5.0 (compatible; ambuilder-uptime/1.0; +https://github.com/Benair/ambuilder-uptime)"; do
+            echo "== UA: $ua"
+            curl -s -m 15 -A "$ua" -D - -o body.txt https://api.ambuilder.ca/health | grep -iE "^HTTP|cf-mitigated|server:|cf-ray" 
+            head -c 200 body.txt | tr '\n' ' '; echo
+          done
+          echo "== main site"; curl -s -m 15 -o /dev/null -w "%{http_code}\n" https://ambuilder.ca/
