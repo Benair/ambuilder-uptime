@@ -1,0 +1,10 @@
+{
+  "name": "ambuilder-uptime-worker",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}

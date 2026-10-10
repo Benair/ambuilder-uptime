@@ -1,0 +1,15 @@
+# AM Builder uptime monitor. See src/index.js.
+name = "ambuilder-uptime"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["* * * * *"]   # every minute
+
+[observability]
+enabled = true
+
+# id filled in after `wrangler kv namespace create STATE`
+[[kv_namespaces]]
+binding = "STATE"
+id = "3158a8d9cbab47808df32959c5f87a1d"

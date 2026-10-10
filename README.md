@@ -1,12 +1,19 @@
 # AM Builder uptime
 
-Checks `https://api.ambuilder.ca/health` every 5 minutes and texts the owner
-when it goes down and when it comes back (`.github/workflows/uptime.yml`).
+A Cloudflare Worker (`worker/`) checks `https://api.ambuilder.ca/health`
+every minute and texts the owner through Twilio when it goes down and again
+when it comes back.
 
-- Runs on GitHub's servers, so it works when the server's own network is down.
-- Texts only on a change of state.
-- Twilio credentials and the phone number are encrypted repository secrets:
+- Runs inside Cloudflare. The zone's bot protection challenges outside monitors
+  (GitHub Actions got `403 Just a moment...`), so an external checker can't see
+  the server at all. A Worker isn't challenged.
+- Down = no 200 on three tries ~10 s apart. Texts only on a change of state;
+  state lives in Workers KV and is written only when it changes.
+- Secrets (set with `npx wrangler secret put NAME` in `worker/`):
   `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_MESSAGING_SERVICE_SID`,
-  `ALERT_PHONE`.
-- Send a test text: Actions → uptime → Run workflow → tick "Send a test text".
-- `keepalive.yml` commits once a month so GitHub doesn't pause the schedule.
+  `ALERT_PHONE`, `TEST_KEY`.
+- See what it sees: open the worker URL. Send a test text: add `?test=<TEST_KEY>`.
+- Deploy changes: `cd worker && npx wrangler deploy`.
+
+The first version used a GitHub Actions schedule; it was removed for the
+reason above.
