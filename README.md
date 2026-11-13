@@ -1,4 +1,14 @@
-# AM Builder uptime
+# AM Builder Workers
+
+Three Cloudflare Workers: uptime alerts (`worker/`), email replies (`replies/`),
+and the phone-agent recap relay (`vapi/`, Retell + legacy Vapi).
+
+**Tests:** `npm install && npm test` (Vitest, 22 tests, no network: fetch,
+Twilio and KV are faked). CI runs them on every push and PR, and deploys all
+three Workers from `main` once tests pass (see `.github/workflows/ci.yml` for
+the two repo secrets it needs).
+
+## Uptime (`worker/`)
 
 A Cloudflare Worker (`worker/`) checks `https://api.ambuilder.ca/health`
 every minute and texts the owner through Twilio when it goes down and again

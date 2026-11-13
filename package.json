@@ -1,0 +1,13 @@
+{
+  "name": "ambuilder-workers",
+  "private": true,
+  "type": "module",
+  "description": "Tests for the three Workers. Each Worker still deploys from its own folder.",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "postal-mime": "^2.7.6",
+    "vitest": "^3.2.4"
+  }
+}
